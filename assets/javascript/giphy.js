@@ -6,7 +6,7 @@
             function displayGifInfo() {
 
               var gif = $(this).attr("data-name");
-              var queryURL = "https://api.giphy.com/v1/gifs/q=" + gif + "&limit=30&api_key=dc6zaTOxFJmzC";
+              var queryURL = "https://api.giphy.com/v1/gifs/trending?&q=" + gif + "&limit=30&api_key=dc6zaTOxFJmzC";
               console.log(gif);
               // When we click a button, make an AJAX call to the Giphy API with the button text as a search parameter, and then render the gifs in the gif-display div. 
             
@@ -15,30 +15,42 @@
                 method: "GET"
               }).then(function(response) {
                 //parse the response into variables
-                console.log(response)
+                console.log(response);
+                console.log(response.data.length)
+                for (i=0; i<response.data.length; i++){
+                  //get the individual gifs from the JSON
+                  var gifData = response.data[i];
+
+                  //parse the gif data to get the bits we want to show
+                  var gifURL = gifData.url;
+                  var imgURL = gifData.images.fixed_height.url;
+                  var rating = gifData.rating;
+
+                  var gifDiv = $("<div class='gif'>");
+                  var ratingp = $("<p>").text("Rating: " + rating);
+                  var src = imgURL;
+
+
+                  var gifDisp = $("<img>").attr({
+                    "src": src,  
+                    "data-state": "still", 
+                    "data-still": imgURL,
+                    "data-animate": gifURL,
+                   });
+                  
+                   gifDiv.append(gifDisp);
+                   gifDiv.append(ratingp);
+                   $("#gif-display-col-1").prepend(gifDiv);
+                  
+
+
+                }
                 
-
-                //var gifDiv = $("<div class='gif'>");
-                //var rating = response.rating
-                //var ratingp = $("<p>").text("Rating: " + rating);
-                //gifDiv.append(ratingp);
-                //var gifURLStill = response.images.fixed_height_still.url
-                //var gifURLAnimate = response.images.fixed_height.url
-                //var src = gifURLStill;
-
-                //render the response and add animation controls
-                //var gifPic = $("<img>").attr({
-                //  "src": src,  
-                //  "data-state": "still", 
-                //  "data-still": gifURLStill,
-                //  "data-animate": gifURLAnimate,
-                //  });
-
-                //gifDiv.append(gifPic);
-               // $("#gif-display-col1").prepend(gifDiv);
+              
               });
+              
+              }
 
-            }
             
 
             function renderButtons() {
