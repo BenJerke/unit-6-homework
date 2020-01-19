@@ -5,9 +5,10 @@
             // Render the results returned in the AJAX call 
             function displayGifInfo() {
 
-              var gif = $(this).attr("data-name");
-              var queryURL = "https://api.giphy.com/v1/gifs/trending?&q=" + gif + "&limit=30&api_key=dc6zaTOxFJmzC";
-              console.log(gif);
+              var gifsrch = $(this).attr("data-name").trim();
+              console.log(gifsrch)
+              var queryURL = "https://api.giphy.com/v1/gifs/trending?&q=" + gifsrch + "&limit=30&api_key=dc6zaTOxFJmzC";
+
               // When we click a button, make an AJAX call to the Giphy API with the button text as a search parameter, and then render the gifs in the gif-display div. 
             
               $.ajax({
@@ -38,9 +39,24 @@
                     "data-animate": gifURL,
                    });
                   
-                   gifDiv.append(gifDisp);
-                   gifDiv.append(ratingp);
-                   $("#gif-display-col-1").prepend(gifDiv);
+                   //sort into columns using the incrementer
+                   if (i<9){
+                      gifDiv.append(gifDisp);
+                      gifDiv.append(ratingp);
+                      $("#gif-display-col-1").prepend(gifDiv);
+                   }
+
+                   else if (i<18) {
+                    gifDiv.append(gifDisp);
+                    gifDiv.append(ratingp);
+                    $("#gif-display-col-2").prepend(gifDiv);
+                   }
+
+                   else {
+                    gifDiv.append(gifDisp);
+                    gifDiv.append(ratingp);
+                    $("#gif-display-col-3").prepend(gifDiv);
+                   }
                   
 
 
@@ -92,7 +108,7 @@
 
           //when a gif is clicked, play the gif if it's still, and pause the gif if it's playing. 
 
-            function gifAnimate () {
+           $("img").on("click", function () {
               var state = $(this).attr("data-state");
           
 
@@ -103,7 +119,7 @@
 
             
             $(this).attr("src", src) 
-            
+            console.log("click registered")
           }
 
           else if (state === "animate") {
@@ -113,8 +129,16 @@
 
             console.log(src)
             $(this).attr("src", src) 
-            
+            console.log("click registered")
           };
+        });
+        
+        
 
-        }
+
+
+
+  
+
+
         renderButtons();
