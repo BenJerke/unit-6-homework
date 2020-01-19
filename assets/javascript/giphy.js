@@ -7,7 +7,7 @@
 
               var gifsrch = $(this).attr("data-name").trim();
               console.log(gifsrch)
-              var queryURL = "https://api.giphy.com/v1/gifs/trending?&q=" + gifsrch + "&limit=30&api_key=dc6zaTOxFJmzC";
+              var queryURL = "https://api.giphy.com/v1/gifs/search?&q=" + gifsrch + "&limit=30&api_key=dc6zaTOxFJmzC";
 
               // When we click a button, make an AJAX call to the Giphy API with the button text as a search parameter, and then render the gifs in the gif-display div. 
             
